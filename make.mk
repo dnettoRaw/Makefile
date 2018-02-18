@@ -11,6 +11,7 @@ PINC := $(LPINC) $(PINC)
 CLIB := $(LCLIB) $(CLIB)
 LIB := $(LLIB) $(LIB)
 LARGS := $(LLARGS) $(LARGS)
+NB_CORE := $(shell grep -c '^processor' /proc/cpuinfo)
 endif
 
 ifeq ($(shell uname),Darwin)
@@ -19,6 +20,7 @@ PINC := $(MPINC) $(PINC)
 CLIB := $(MCLIB) $(CLIB)
 LIB := $(MLIB) $(LIB)
 LARGS := $(MLARGS) $(LARGS)
+NB_CORE := $(shell sysctl -n hw.ncpu)
 endif
 
 ###########################################################
@@ -50,11 +52,14 @@ include $(MMPATH)src/dv.mk
 include $(MMPATH)src/ac.mk
 # create files
 include $(MMPATH)src/cf.mk
+# clean, fclean, re
+include $(MMPATH)src/re.mk
 # run test
 include $(MMPATH)src/rt.mk
 # create a clean make file no include, no wildchar promisse 
 include $(MMPATH)src/fm.mk
 
+.PHONY: all clean fclean re auteur libs 
 ###########################################################
 ###.....................by.:.dnetto.....................###
 ###########################################################

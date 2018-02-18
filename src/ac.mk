@@ -61,23 +61,6 @@ endif
 ifeq ($(TAG), )
 $(info $(call wrn_c) $(shell echo "$ITAG$R is off, default $I$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')$R"))
 endif
-
-else
-#verbose 1 all steps msg on
-ifeq ($(filter 1, $(verbose) $(v) $(VERBOSE) $(V)), )
-S_1 := @
-endif
-#verbose 2 all steps debug on
-ifeq ($(filter 2, $(verbose) $(v) $(VERBOSE) $(V)), )
-S_1 := @
-S_2 := @
-endif
-#verbose 3 all commands verbose
-ifeq ($(filter 3, $(verbose) $(v) $(VERBOSE) $(V)), )
-S_1 := @
-S_2 := @
-S_3 := @
-endif
 endif
 
 ifeq ($(NAME), )
@@ -106,6 +89,10 @@ endif
 
 ifeq ($(D_OBD), )
 D_OBD	:=$(addprefix $(D_ALLS)/, obd)
+endif
+
+ifeq ($(D_NORM), )
+D_SRC	:= $(addprefix $(D_ALLS)/, norm)
 endif
 
 ifeq ($(D_LIB), )
@@ -143,6 +130,10 @@ ifeq ($(OBD), )
 OBD		:= $(addprefix $(D_OBD)/, $(TMP_FIND:.c=.d))
 endif
 
+ifeq ($(OBD), )
+OBD		:= $(addprefix $(D_NORM)/, $(TMP_FIND:.c=.nr))
+endif
+
 ifeq ($(NOFLAG), )
 CFLAGS	:=
 endif
@@ -150,3 +141,25 @@ endif
 ifeq ($(TAG), )
 TAG		:= $(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
 endif
+
+#verbose 1 all steps msg on
+ifneq ($(filter 1, $(verbose) $(v) $(VERBOSE) $(V)), )
+S_1 :=
+SIL = 1
+endif
+#verbose 2 all steps debug on
+ifneq ($(filter 2, $(verbose) $(v) $(VERBOSE) $(V)), )
+S_1 :=
+S_2 :=
+SIL = 2
+endif
+#verbose 3 all commands verbose
+ifneq ($(filter 3, $(verbose) $(v) $(VERBOSE) $(V)), )
+S_1 :=
+S_2 :=
+S_3 :=
+SIL = 3
+endif
+S_1 ?=@
+S_2 ?=@
+S_3 ?=@

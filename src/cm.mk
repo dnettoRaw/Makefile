@@ -23,7 +23,16 @@ R 			 = \033[0m
 OK_STR  = $(strip $(OK_COLOR)[ OK ]$(RESET))
 WRN_STR	= $(strip $(WRN_COLOR)[ warning ]$(RESET))
 ERR_STR	= $(strip $(ERR_COLOR)[ error ]$(RESET))
-INF_STR = $(strip $(INF_COLOR)[ info ] $(RESET)[$(TAG_COLOR)$(NAME)$(RESET)])
+INF_STR = $(strip $(INF_COLOR)[ info ] $(RESET)$(DEPTH_F)[$(TAG_COLOR)$(NAME)$(RESET)])
+IRM_STR = $(strip $(RM_COLOR)[ info ] $(RESET)$(DEPTH_F)[$(TAG_COLOR)$(NAME)$(RESET)])
+
+#deph find 
+ifneq ($(DEPTH), )
+DEPTH_F = $(shell dep=0 ; while [[ $$dep -le "$(DEPTH) - 1" ]] ; do dep=`expr $$dep + 1` && echo "╶" ; done)
+endif 
+ifeq ($(INTER), yes)
+DEPTH_F +=└─
+endif 
 
 # output error / warning colored
 define msg_c

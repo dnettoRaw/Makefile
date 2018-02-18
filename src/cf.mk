@@ -7,19 +7,20 @@ all: auteur libs $(NAME) #other_makes
 # auteur file
 auteur:
 ifeq ($(AUTEUR), )
-	$(S_2)if [ -e ./auteur ] ; then echo "$(OK_STR) : AUTEUR \c" && cat ./auteur && echo "\n\c" ; else echo "$(ERR_STR) : AUTEUR don't exist" ; fi
+	$(S_2)if [ -e ./auteur ] ; then echo "$(INF_STR) : AUTEUR = \c" && cat ./auteur && echo "$(OK_STR)" ; else echo "$(ERR_STR) : AUTEUR don't exist" ; fi
 else
-	$(S_2)if [ -e ./auteur ] ; then echo "$(OK_STR) : AUTEUR \c" && cat ./auteur && echo "\n\c"; else echo "$(AUTEUR)\c" > auteur ; echo "$(OK_STR) : AUTEUR has been created" ; fi
+	$(S_2)if [ -e ./auteur ] ; then echo "$(INF_STR) : AUTEUR = \c" && cat ./auteur && echo "$(OK_STR)"; else echo "$(AUTEUR)\c" > auteur ; echo "$(INF_STR) : AUTEUR has been created" ; fi
 endif
 
 # make others makes
 libs:
 ifneq ($(LIBS), )
-	$(S_3)$(foreach lb, $(LIBS),$(MAKE) -C $(lb);)
-	$(S_1)echo "$(INF_STR) : libs $(OK_STR)"
+	$(S_3)$(foreach lb, $(LIBS),$(MAKE) -C $(lb) VERBOSE=$(SIL) INTER=yes DEPTH="$(DEPTH) + 1" ;)
+	$(S_2)echo "$(INF_STR) : libs has been created $(OK_STR)"
 else
-	$(S_1)echo "$(WRN_STR) : No Libs needed for $(WRN_COLOR)$(NAME)$(RESET)" 
+	$(S_2)echo "$(WRN_STR) : No Libs needed for $(TAG_COLOR)$(NAME)$(RESET)" 
 endif
+
 
 $(NAME): $(OBD) $(OBJ) libs
 ifeq ($(suffix $(NAME)), .a)
