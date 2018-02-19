@@ -63,7 +63,7 @@ include $(MMPATH)src/nr.mk
 
 debug:
 	$(S_3)$(foreach lb, $(LIBS),$(MAKE) -C $(lb) VERBOSE=$(SIL) INTER=yes DEPTH="expr $(DEPTH) + 1" debug;)
-	@echo "$(LIBS)\n$(INCLIB)"
+	@echo "\n$(INC)\n$(INC_FILES)"
 #"src = $(SRC)\n\nobj = $(OBJ)\n\nobd = $(OBD)\n\nnorm = $(NORM)"
 
 .PHONY: all clean fclean re auteur libs 

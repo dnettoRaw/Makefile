@@ -79,6 +79,10 @@ ifeq ($(D_SRC), )
 D_SRC	= ./src
 endif
 
+ifeq ($(D_SRC_VPATH), )
+D_SRC_VPATH	= $(shell find $(D_SRC) -type d -not -path $(D_SRC))
+endif
+
 ifeq ($(D_ALLS), )
 D_ALLS	= ./objs
 endif
@@ -108,7 +112,7 @@ LIBA	= $(shell find $(LIBS) -type f -iname 'Makefile' -exec grep -m 1  'NAME' {}
 endif
 
 ifeq ($(INCLIB), )
-INCLIB	= $(foreach lsd, $(LIBS), -L$(lsd)/ -l$(shell find $(lsd) -type f -iname 'Makefile' -maxdepth 1 -exec grep -m 1  'NAME' {} \; | cut -d 'b' -f2- ))
+INCLIB	= $(foreach lsd, $(LIBS), -L$(lsd)/ -l$(shell find $(lsd) -type f -iname 'Makefile' -maxdepth 1 -exec grep -m 1  'NAME' {} \; | cut -d 'b' -f2- | cut -d '.' -f-1))
 endif
 
 ifeq ($(INC), )
@@ -119,7 +123,7 @@ endif
 TMP_FIND = $(shell find $(D_SRC) | grep \\.c$ | rev | cut -d '/' -f1 | rev)
 
 ifeq ($(SRC), )
-SRC		= $(wildcard $(D_SRC)/*.c)
+SRC		= $(shell find $(D_SRC) -type f) #$(wildcard $(D_SRC)/*.c)
 endif
 
 ifeq ($(OBJ), )
@@ -138,7 +142,7 @@ endif
 ifeq ($(NOFLAG), )
 CFLAGS	=
 else 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS ?= -Wall -Werror -Wextra
 endif
 
 ifeq ($(TAG), )

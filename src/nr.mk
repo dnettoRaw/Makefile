@@ -18,7 +18,7 @@ norminette: mki
 $(D_NORM)/%.nr: %.c 
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[/] > $<\c"
 	$(S_2)echo "├──┬── NORME : $I$<$(R)" > $@
-	$(S_2)norminette $< | grep -v 'Norme:' | sed 's/Error/│  ├──/g' >> $@
+	$(S_2)$(EXEC_NORMINETTE) $< | grep -v 'Norme:' | sed 's/Error/│  ├──/g' | sed 's/Warning:/│  ├──/g' >> $@
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[\\] > $@\c"
 	$(S_2)echo "│  └── end of file\n│" >> $@
 	$(S_2)if [ "`sed -n 2p $@`" != "│  └── end of file" ] ; then cat $@ >> $(D_NORM)/_error_files.nr ; fi;
@@ -26,7 +26,7 @@ $(D_NORM)/%.nr: %.c
 $(D_NORM)/%.nr: %.h 
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[/] > $<\c"
 	$(S_2)echo "├──┬── NORME : $I$<$(R)" > $@
-	$(S_2)norminette $< | grep -v 'Norme:' | sed 's/Error/│  ├──/g' >> $@
+	$(S_2)$(EXEC_NORMINETTE) $< | grep -v 'Norme:' | sed 's/Error/│  ├──/g'| sed 's/Warning:/│  ├──/g' >> $@
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[\\] > $@\c"
 	$(S_2)echo "│  └── end of file\n│" >> $@
 	$(S_2)if [ "`sed -n 2p $@`" != "│  └── end of file" ] ; then cat $@ >> $(D_NORM)/_error_files.nr ; fi;
