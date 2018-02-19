@@ -1,7 +1,3 @@
-MK ="makefile2"
-
-# recupere hexa code echo $ | hexdump -b
-
 ###########################################################
 ########	   	 generate defaut makefile          ########
 ###########################################################
@@ -13,6 +9,6 @@ finish:
 	"$(D_SRC)" "$(D_ALLS)" "$(D_OBJ)" \
 	"$(D_OBD)" "$(D_LIB)" \
 	"$(LIBS)" "$(LIBA)" "$(INCLIB)" \
-	"$(INC)"  "$(SRC)" "$(OBJ)" \
+	"$(INC)" "$(SRC)" "$(OBJ)" \
 	"$(OBD)" "$(CFLAGS)" \
 	"$(TAG)" "$(VPATH)"

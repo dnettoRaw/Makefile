@@ -18,17 +18,18 @@ OK_COLOR     = $(strip $(call make_color,46))
 TAG_COLOR	 = $(strip $(call make_color,$(TAG)))
 I			 = \033[1m
 R 			 = \033[0m
+NAME_COLOR	 = $(strip [$(TAG_COLOR)$(NAME)$(RESET)])
 
 # info text 
 OK_STR  = $(strip $(OK_COLOR)[ OK ]$(RESET))
 WRN_STR	= $(strip $(WRN_COLOR)[ warning ]$(RESET))
 ERR_STR	= $(strip $(ERR_COLOR)[ error ]$(RESET))
-INF_STR = $(strip $(INF_COLOR)[ info ] $(RESET)$(DEPTH_F)[$(TAG_COLOR)$(NAME)$(RESET)])
-IRM_STR = $(strip $(RM_COLOR)[ info ] $(RESET)$(DEPTH_F)[$(TAG_COLOR)$(NAME)$(RESET)])
+INF_STR = $(strip $(INF_COLOR)[ info ] $(RESET)$(DEPTH_F)$(NAME_COLOR))
+IRM_STR = $(strip $(RM_COLOR)[ info ] $(RESET)$(DEPTH_F)$(NAME_COLOR))
 
 #deph find 
 ifneq ($(DEPTH), )
-DEPTH_F = $(shell dep=0 ; while [[ $$dep -le "$(DEPTH) - 1" ]] ; do dep=`expr $$dep + 1` && echo "╶" ; done)
+DEPTH_F = $(shell dep=0 ; while [[ $$dep -le "$(DEPTH) - 1" ]] ; do dep=`expr $$dep + 1` && echo " ╶" ; done)
 endif 
 ifeq ($(INTER), yes)
 DEPTH_F +=└─

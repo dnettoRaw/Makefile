@@ -6,13 +6,12 @@
 ########	   	    defaut vars makefile           ########
 ###########################################################
 CC		?= gcc
-AR 		:= ar
+AR 		:= ar rc
 RANLIB 	:= ranlib
 MK		:= mkdir -p
-RM		:= rm -rf
+RM		:= -rm -r
 CFLAGS	?= -Wall -Werror -Wextra
-DIRS 	?= $(D_ALLS) $(D_OBJ) $(D_OBD)
-VPATH	?= $(D_SRC)
+DIRS 	?= $(D_OBJ) $(D_OBD) $(D_NORM)
+VPATH	?= $(D_SRC) $(D_INC)
 #MAKE 	:= $(MAKE) --no-print-directory  -j$(NB_CORE - 1) -l$(NB_CORE - 2) 
-MAKE	:= make
 JOINLIB := libtool -static -o 

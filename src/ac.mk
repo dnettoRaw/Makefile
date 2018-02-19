@@ -72,74 +72,77 @@ $(error $(call err_c) WILDCAR is not accepted, please fix this)
 endif
 
 ifeq ($(D_INC), )
-D_INC := ./includes
+D_INC = ./includes
 endif
 
 ifeq ($(D_SRC), )
-D_SRC	:= ./src
+D_SRC	= ./src
 endif
 
 ifeq ($(D_ALLS), )
-D_ALLS	:=	./objs
+D_ALLS	= ./objs
 endif
 
 ifeq ($(D_OBJ), )
-D_OBJ	:= $(addprefix $(D_ALLS)/, obj)
+D_OBJ	= $(addprefix $(D_ALLS)/, obj)
 endif
 
 ifeq ($(D_OBD), )
-D_OBD	:=$(addprefix $(D_ALLS)/, obd)
+D_OBD	=$(addprefix $(D_ALLS)/, obd)
 endif
 
 ifeq ($(D_NORM), )
-D_SRC	:= $(addprefix $(D_ALLS)/, norm)
+D_NORM	= $(addprefix $(D_ALLS)/, norm)
 endif
 
 ifeq ($(D_LIB), )
-D_LIB	:= ./libs
+D_LIB	= ./libs
 endif
 
 ifeq ($(LIBS), )
-LIBS	:= $(shell find $(D_LIB) -type d -not -path $(D_LIB) -maxdepth 1)
+LIBS	= $(shell find $(D_LIB) -type d -not -path $(D_LIB) -maxdepth 1)
 endif
 
 ifeq ($(LIBA), )
-LIBA	:= $(shell find $(LIBS) -type f -iname 'Makefile' -exec grep -m 1  'NAME' {} \; | cut -d '=' -f2- )
+LIBA	= $(shell find $(LIBS) -type f -iname 'Makefile' -exec grep -m 1  'NAME' {} \; | cut -d '=' -f2- )
 endif
 
 ifeq ($(INCLIB), )
-INCLIB	:= $(foreach lsd, $(LIBS), -L$(lsd)/ -l$(shell find $(lsd) -type f -iname 'Makefile' -exec grep -m 1  'NAME' {} \; | cut -d 'b' -f2- ))
+INCLIB	= $(foreach lsd, $(LIBS), -L$(lsd)/ -l$(shell find $(lsd) -type f -iname 'Makefile' -maxdepth 1 -exec grep -m 1  'NAME' {} \; | cut -d 'b' -f2- ))
 endif
 
 ifeq ($(INC), )
-TMP_FIND = $(shell find $(D_INC) -type f -maxdepth 1 | grep \\.h$ | rev | cut -d '/' -f1 | rev)
-INC 	:= $(addprefix -I, $(D_INC)) #$(foreach ins, $(TMP_FIND), -I./includes/$(ins))
+INC_FILES = $(shell find $(D_INC) -type f -maxdepth 1 | grep \\.h$ | rev | cut -d '/' -f1 | rev)
+INC 	= $(addprefix -I, $(D_INC)) #$(foreach ins, $(TMP_FIND), -I./includes/$(ins))
 endif
 
 TMP_FIND = $(shell find $(D_SRC) | grep \\.c$ | rev | cut -d '/' -f1 | rev)
 
 ifeq ($(SRC), )
-SRC		:= $(shell find $(D_SRC) | grep \\.c$)
+SRC		= $(wildcard $(D_SRC)/*.c)
 endif
 
 ifeq ($(OBJ), )
-OBJ		:= $(addprefix $(D_OBJ)/, $(TMP_FIND:.c=.o))
+OBJ		= $(addprefix $(D_OBJ)/, $(TMP_FIND:.c=.o))
 endif
 
 ifeq ($(OBD), )
-OBD		:= $(addprefix $(D_OBD)/, $(TMP_FIND:.c=.d))
+OBD		= $(addprefix $(D_OBD)/, $(TMP_FIND:.c=.d))
 endif
 
-ifeq ($(OBD), )
-OBD		:= $(addprefix $(D_NORM)/, $(TMP_FIND:.c=.nr))
+ifeq ($(filter ,$(NRM_C), $(NRM_H)), )
+NORM_C	= $(addprefix $(D_NORM)/, $(TMP_FIND:.c=.nr))
+NORM_H	+= $(addprefix $(D_NORM)/, $(INC_FILES:.h=.nr))
 endif
 
 ifeq ($(NOFLAG), )
-CFLAGS	:=
+CFLAGS	=
+else 
+CFLAGS = -Wall -Werror -Wextra
 endif
 
 ifeq ($(TAG), )
-TAG		:= $(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
+TAG		:=  $(shell echo $$RANDOM % 255 + 1 | bc) #$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
 endif
 
 #verbose 1 all steps msg on
