@@ -71,32 +71,31 @@ ifeq ($(filter *, $(SRC) $(OBJ) $(OBD)), *)
 $(error $(call err_c) WILDCAR is not accepted, please fix this)
 endif
 
+######################################################################
+###########
+######################################################################
 ifeq ($(D_INC), )
-D_INC = ./includes
+D_INC 	= ./includes
 endif
-
 ifeq ($(D_SRC), )
 D_SRC	= ./src
 endif
 
-ifeq ($(D_SRC_VPATH), )
-D_SRC_VPATH	= $(shell find $(D_SRC) -type d -not -path $(D_SRC))
-endif
-
-ifeq ($(D_ALLS), )
-D_ALLS	= ./objs
-endif
+FILEBASE_C	= $(foreach V, $(shell find $(D_SRC) -type f | grep "\.c" | rev | cut -f2- -d. | rev | cut -f3- -d/), $(V))
+FILEBASE_H	= $(foreach V, $(shell find $(D_INC) -type f | grep "\.h" | rev | cut -f2- -d. | rev | cut -f3- -d/), $(V))
+DIRBASE_C	= $(foreach V, $(shell find $(D_SRC) -type d |  cut -f3- -d/ | sed '1d'),$(V))
+DIRBASE_H	= $(foreach V, $(shell find $(D_INC) -type d |  cut -f3- -d/ | sed '1d'),$(V))
 
 ifeq ($(D_OBJ), )
-D_OBJ	= $(addprefix $(D_ALLS)/, obj)
+D_OBJ	= ./objs/files.o
 endif
 
 ifeq ($(D_OBD), )
-D_OBD	=$(addprefix $(D_ALLS)/, obd)
+D_OBD	= ./objs/files.d
 endif
 
 ifeq ($(D_NORM), )
-D_NORM	= $(addprefix $(D_ALLS)/, norm)
+D_NORM	= ./objs/files.nr
 endif
 
 ifeq ($(D_LIB), )
@@ -104,7 +103,7 @@ D_LIB	= ./libs
 endif
 
 ifeq ($(LIBS), )
-LIBS	= $(shell find $(D_LIB) -type d -not -path $(D_LIB) -maxdepth 1)
+LIBS	= $(shell find $(D_LIB) -type d -maxdepth 1)
 endif
 
 ifeq ($(LIBA), )
@@ -116,27 +115,25 @@ INCLIB	= $(foreach lsd, $(LIBS), -L$(lsd)/ -l$(shell find $(lsd) -type f -iname 
 endif
 
 ifeq ($(INC), )
-INC_FILES = $(shell find $(D_INC) -type f -maxdepth 1 | grep \\.h$ | rev | cut -d '/' -f1 | rev)
+INC_FILES = $(addprefix $(FILEBASE_H), .h)
 INC 	= $(addprefix -I, $(D_INC)) #$(foreach ins, $(TMP_FIND), -I./includes/$(ins))
 endif
 
-TMP_FIND = $(shell find $(D_SRC) | grep \\.c$ | rev | cut -d '/' -f1 | rev)
-
 ifeq ($(SRC), )
-SRC		= $(shell find $(D_SRC) -type f) #$(wildcard $(D_SRC)/*.c)
+SRC		= $(patsubst %, $(D_SRC)/%.c, $(FILEBASE_C)) #$(wildcard $(D_SRC)/*.c)
 endif
 
 ifeq ($(OBJ), )
-OBJ		= $(addprefix $(D_OBJ)/, $(TMP_FIND:.c=.o))
+OBJ		= $(patsubst %, $(D_OBJ)/%.o, $(FILEBASE_C))
 endif
 
 ifeq ($(OBD), )
-OBD		= $(addprefix $(D_OBD)/, $(TMP_FIND:.c=.d))
+OBD		= $(patsubst %, $(D_OBD)/%.d, $(FILEBASE_C))
 endif
 
 ifeq ($(filter ,$(NRM_C), $(NRM_H)), )
-NORM_C	= $(addprefix $(D_NORM)/, $(TMP_FIND:.c=.nr))
-NORM_H	+= $(addprefix $(D_NORM)/, $(INC_FILES:.h=.nr))
+NORM_C	= $(patsubst %, $(D_NORM)/%.nr, $(FILEBASE_C))
+NORM_H	= $(patsubst %, $(D_NORM)/%.nr, $(FILEBASE_H))
 endif
 
 ifeq ($(NOFLAG), )
@@ -149,6 +146,13 @@ ifeq ($(TAG), )
 TAG		:=  $(shell echo $$RANDOM % 255 + 1 | bc) #$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
 endif
 
+#verbose 0 no output
+ifneq ($(filter 0, $(verbose) $(v) $(VERBOSE) $(V)), )
+S_1 :=@
+S_2 :=@
+S_3 :=@
+SIL := 0
+endif
 #verbose 1 all steps msg on
 ifneq ($(filter 1, $(verbose) $(v) $(VERBOSE) $(V)), )
 S_1 :=
