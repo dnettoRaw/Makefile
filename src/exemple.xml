@@ -1,0 +1,22 @@
+<plist version="1.0">
+    <vars>
+        <v1> la v1 est la premiere variable du lot </v1>
+        <v2> bah ce si con que ca, pour la suite</v2>
+    </vars>
+    <vars meta="especial">
+        <v1 meta="banana"> donc ici on est un peut diferent de la v1</v1>
+        <!-- et pour finir un peti commentaire sympa :3 -->
+    </vars>
+    <vars meta="venere">
+        <v1 meta="teste"> je       
+        peut 
+        etre 
+        aussi 
+        sur plusieurs
+        lignes 
+        c moins 
+        marrant n'est pas ?
+        mdr
+        </v1> 
+    <vars>
+</plist>

@@ -47,6 +47,7 @@ MMPATH := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))src
 # some colors and warnings
 include $(MMPATH)/ColorMaker.mk
 include $(MMPATH)/AutoComplete.mk
+include $(MMPATH)/VerboseMods.mk
 include $(MMPATH)/CreatFiles.mk
 include $(MMPATH)/RemoveFiles.mk
 
