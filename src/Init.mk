@@ -9,7 +9,7 @@ $(info $(call wrn_c) $(shell echo "$IFOLDERS$R is not defined, setting it to def
 endif
 
 ifeq ($(FILES), )
-FILES := auteur src/.c include/exemple.h
+FILES := auteur src/exemple.c include/exemple.h
 $(info $(call wrn_c) $(shell echo "$IFILES$R is not defined, setting it to default $(I)'$(FILES)'$(R)"))
 endif
 
