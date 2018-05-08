@@ -50,6 +50,9 @@ include $(MMPATH)/AutoComplete.mk
 include $(MMPATH)/VerboseMods.mk
 include $(MMPATH)/CreatFiles.mk
 include $(MMPATH)/RemoveFiles.mk
+include $(MMPATH)/MakeMakefile.mk
+include $(MMPATH)/norme42.mk
+
 
 all:
 	@echo "teste"
