@@ -17,7 +17,7 @@ norminette: mki
 	
 $(D_NORM)/%.nr: %.c 
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[/] > $<\c"
-	$(S_2)echo "├──┬── NORME : $I$<$(R)" > $@
+	$(S_2)echo "├──┬── NORME : $B$<$(R)" > $@
 	$(S_2)$(EXEC_NORMINETTE) $< | grep -v 'Norme:' | sed 's/Error/│  ├──/g' | sed 's/Warning:/│  ├──/g' >> $@
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[\\] > $@\c"
 	$(S_2)echo "│  └── end of file\n│" >> $@
@@ -25,7 +25,7 @@ $(D_NORM)/%.nr: %.c
 
 $(D_NORM)/%.nr: %.h 
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[/] > $<\c"
-	$(S_2)echo "├──┬── NORME : $I$<$(R)" > $@
+	$(S_2)echo "├──┬── NORME : $B$<$(R)" > $@
 	$(S_2)$(EXEC_NORMINETTE) $< | grep -v 'Norme:' | sed 's/Error/│  ├──/g'| sed 's/Warning:/│  ├──/g' >> $@
 	$(S_2)echo "\r\033[J$(NAME_COLOR)[\\] > $@\c"
 	$(S_2)echo "│  └── end of file\n│" >> $@

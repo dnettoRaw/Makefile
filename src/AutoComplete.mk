@@ -15,51 +15,51 @@ ifneq ($(filter 1 2 3,$(verbose) $(v) $(VERBOSE) $(V)), )
 S :=
 
 ifeq ($(INC), )
-$(info $(call wrn_c) $(shell echo "$IINC$R is not defined, setting it to default $(I)'-I.'$(R)"))
+$(info $(call wrn_c) $(shell echo "$BINC$R is not defined, setting it to default $(B)'-I.'$(R)"))
 endif
 
 ifeq ($(SRC), )
-$(info $(call wrn_c) $(shell echo "$ISRC$R is not defined, setting it to default $I'auto detection files'$R"))
+$(info $(call wrn_c) $(shell echo "$BSRC$R is not defined, setting it to default $B'auto detection files'$R"))
 endif
 
 ifeq ($(D_SRC), )
-$(info $(call wrn_c) $(shell echo "$ID_SRC$R is not defined, setting it to default $I'./src'$R"))
+$(info $(call wrn_c) $(shell echo "$BD_SRC$R is not defined, setting it to default $B'./src'$R"))
 endif
 
 ifeq ($(OBJ), )
-$(info $(call wrn_c) $(shell echo "$IOBJ$R is not defined, setting it to default $I'auto convert files from SRC'$R"))
+$(info $(call wrn_c) $(shell echo "$BOBJ$R is not defined, setting it to default $B'auto convert files from SRC'$R"))
 endif
 
 ifeq ($(D_OBJ), )
-$(info $(call wrn_c) $(shell echo "$ID_OBJ$R is not defined, setting it to default $I'./objects/obj_o'$R"))
+$(info $(call wrn_c) $(shell echo "$BD_OBJ$R is not defined, setting it to default $B'./objects/obj_o'$R"))
 endif
 
 ifeq ($(OBD), )
-$(info $(call wrn_c) $(shell echo "$IOBD$R is not defined, setting it to default $I'auto convert files form OBJ'$R"))
+$(info $(call wrn_c) $(shell echo "$BOBD$R is not defined, setting it to default $B'auto convert files form OBJ'$R"))
 endif
 
 ifeq ($(D_OBD), )
-$(info $(call wrn_c) $(shell echo "$ID_OBD$R is not defined, setting it to default $I'./obj_d'$R"))
+$(info $(call wrn_c) $(shell echo "$BD_OBD$R is not defined, setting it to default $B'./obj_d'$R"))
 endif
 
 ifeq ($(LIB), )
-$(info $(call wrn_c) $(shell echo "$ILIB$R is not defined, setting it to default $I'.'$R"))
+$(info $(call wrn_c) $(shell echo "$BLIB$R is not defined, setting it to default $B'.'$R"))
 endif
 
 ifeq ($(D_LIB), )
-$(info $(call wrn_c) $(shell echo "$ID_LIB$R is not defined, setting it to default $I'.'$R"))
+$(info $(call wrn_c) $(shell echo "$BD_LIB$R is not defined, setting it to default $B'.'$R"))
 endif
 
 ifeq ($(D_ALLS), )
-$(info $(call wrn_c) $(shell echo "$ID_ALLS$R is not defined, setting it to default $I'.'$R"))
+$(info $(call wrn_c) $(shell echo "$BD_ALLS$R is not defined, setting it to default $B'.'$R"))
 endif
 
 ifeq ($(NOFLAG), )
-$(info $(call wrn_c) $(shell echo "$INOFLAGS$R is off, default $I'-Wall -Werror -Wextra'$R"))
+$(info $(call wrn_c) $(shell echo "$BNOFLAGS$R is off, default $B'-Wall -Werror -Wextra'$R"))
 endif
 
 ifeq ($(TAG), )
-$(info $(call wrn_c) $(shell echo "$ITAG$R is off, default $I$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')$R"))
+$(info $(call wrn_c) $(shell echo "$BTAG$R is off, default $B$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')$R"))
 endif
 endif
 

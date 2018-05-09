@@ -4,6 +4,9 @@
 
 # for exemples colors run ./color_tab
 
+# fix not all include mode 
+TAG ?= 266
+
 # color bases 
 RESET          = \033[0m
 make_std_color = \033[3$1m      # defined for 1 through 7
@@ -16,11 +19,12 @@ INF_COLOR    = $(strip $(call make_color,191))
 RM_COLOR     = $(strip $(call make_color,9))
 OK_COLOR     = $(strip $(call make_color,46))
 TAG_COLOR	 = $(strip $(call make_color,$(TAG)))
-I			 = \033[1m
-R 			 = \033[0m
+B			 = \033[1m# 	blond
+U			 = \033[4m# 	underline
+R 			 = \033[0m# 	reset
 NAME_COLOR	 = $(strip [$(TAG_COLOR)$(NAME)$(RESET)])
 
-#deph find 
+#deph find for make inside makefile
 ifneq ($(DEPTH), )
 DEPTH_F = $(shell dep=0 ; while [[ $$dep -le "$(DEPTH) - 1" ]] ; do dep=`expr $$dep + 1` && echo " ╶" ; done)
 endif 
