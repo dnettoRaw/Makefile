@@ -53,10 +53,6 @@ include $(MMPATH)/RemoveFiles.mk
 include $(MMPATH)/MakeMakefile.mk
 include $(MMPATH)/norme42.mk
 
-
-all:
-	@echo "teste"
-
 debug:
 	@echo "$(INF_STR)"
 #\n\nFILEBASE_C	= $(FILEBASE_C)\n\nFILEBASE_H	= $(FILEBASE_H)\n\nDIRBASE_C	= $(DIRBASE_C)\n\nDIRBASE_H	= $(DIRBASE_H)\n\nsrc	= $(SRC)\n\nobj	= $(OBJ)\n\nobd	= $(OBD)\n\nnorm	=$(NORM_C) || $(NORM_H)"

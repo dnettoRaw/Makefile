@@ -19,10 +19,13 @@ INF_COLOR    = $(strip $(call make_color,191))
 RM_COLOR     = $(strip $(call make_color,9))
 OK_COLOR     = $(strip $(call make_color,46))
 TAG_COLOR	 = $(strip $(call make_color,$(TAG)))
-B			 = \033[1m# 	blond
-U			 = \033[4m# 	underline
-R 			 = \033[0m# 	reset
 NAME_COLOR	 = $(strip [$(TAG_COLOR)$(NAME)$(RESET)])
+
+B			 = \033[1m# 		blond
+U			 = \033[4m# 		underline
+R 			 = \033[0m# 		reset
+W			 = \033[38;5;255m#	white color
+G 			 = \033[38;5;46m#	green color
 
 #deph find for make inside makefile
 ifneq ($(DEPTH), )
