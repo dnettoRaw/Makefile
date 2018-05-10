@@ -8,6 +8,7 @@ MK		:= mkdir -p
 RM		:= -rm -r
 CFLAGS	?= -Wall -Werror -Wextra
 DIRS 	?= $(D_OBJ) $(D_OBD) $(D_NORM)
+D_CLEAN ?= ./objs
 VPATH	?= $(D_SRC) $(D_INC) $(D_SRC_VPATH)
 #MAKE 	:= $(MAKE) --no-print-directory  -j$(NB_CORE - 1) -l$(NB_CORE - 2) 
 JOINLIB := libtool -static -o

@@ -30,25 +30,28 @@ endif
 
 
 all: test_only
-	$(S_3)$(MK) $(path)
-	$(S_3)$(foreach D, $(FOLDERS), $(MK) $(path)/$(D) ;)
-	$(S_3)$(foreach F, $(FILES), touch $(path)/$(F);)
-	$(S_3)echo "$(USER)" > $(path)/auteur
-	$(S_3)echo "###########################################################" > $(path)/Makefile
-	$(S_3)echo "###.....................Makefile........................###" >> $(path)/Makefile
-	$(S_3)echo "###########################################################" >> $(path)/Makefile
-	$(S_3)echo "NAME=$(name)" >> $(path)/Makefile
-	$(S_3)echo "\n\c" >> $(path)/Makefile
-	$(S_3)echo "include $(MMPATH)make.mk" >> $(path)/Makefile
-	$(S_3)echo "###########################################################" >> $(path)/Makefile
-	$(S_3)echo "###.....................by.:.dnetto.....................###" >> $(path)/Makefile
-	$(S_3)echo "###########################################################" >> $(path)/Makefile
+	$(S_4)$(MK) $(path)
+	$(S_4)$(foreach D, $(FOLDERS), $(MK) $(path)/$(D) ;)
+	$(S_4)$(foreach F, $(FILES), touch $(path)/$(F);)
+	$(S_4)echo "$(USER)" > $(path)/auteur
+	$(S_4)echo "###########################################################" > $(path)/Makefile
+	$(S_4)echo "###.....................Makefile........................###" >> $(path)/Makefile
+	$(S_4)echo "###########################################################" >> $(path)/Makefile
+	$(S_4)echo "NAME=$(name)" >> $(path)/Makefile
+	$(S_4)echo "\n\c" >> $(path)/Makefile
+	$(S_4)echo "#tag is une number under 1-255 to define color output" >> $(path)/Makefile
+	$(S_4)echo "TAG=$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')" >> $(path)/Makefile
+	$(S_4)echo "\n\c" >> $(path)/Makefile
+	$(S_4)echo "include $(MMPATH)make.mk" >> $(path)/Makefile
+	$(S_4)echo "###########################################################" >> $(path)/Makefile
+	$(S_4)echo "###.....................by.:.dnetto.....................###" >> $(path)/Makefile
+	$(S_4)echo "###########################################################" >> $(path)/Makefile
 
 test_only:
-	$(S_3)echo "$(INF_STR) $(MK) $(path)"
-	$(S_3)echo "$(INF_STR) auteur : $W$B$(USER)$R"
-	$(S_3)echo "$(INF_STR) Project Name $W$B$(name)$R"
-	$(S_3)echo "$(INF_STR) $(path)/makefile"
-	$(S_3)$(foreach D, $(FOLDERS), echo "$(INF_STR) $(MK) $(path)/$(D)" ;)
-	$(S_3)$(foreach F, $(FILES), echo "$(INF_STR) touch $(path)/$(F)" ;)
+	$(S_4)echo "$(INF_STR) $(MK) $(path)"
+	$(S_4)echo "$(INF_STR) auteur : $W$B$(USER)$R"
+	$(S_4)echo "$(INF_STR) Project Name $W$B$(name)$R"
+	$(S_4)echo "$(INF_STR) $(path)/makefile"
+	$(S_4)$(foreach D, $(FOLDERS), echo "$(INF_STR) $(MK) $(path)/$(D)" ;)
+	$(S_4)$(foreach F, $(FILES), echo "$(INF_STR) touch $(path)/$(F)" ;)
 	

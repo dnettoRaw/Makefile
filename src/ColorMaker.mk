@@ -4,8 +4,11 @@
 
 # for exemples colors run ./color_tab
 
-# fix not all include mode 
-TAG ?= 266
+# fix not all include mode
+ifeq ($(TAG), )
+TAG ?= $(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
+TAG_WARNIG = yes
+endif
 
 # color bases 
 RESET          = \033[0m

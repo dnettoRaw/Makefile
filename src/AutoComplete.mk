@@ -11,7 +11,7 @@
 # 4 to output log file with verbose 3
 
 
-ifneq ($(filter 1 2 3,$(verbose) $(v) $(VERBOSE) $(V)), )
+ifneq ($(filter 3,$(verbose) $(v) $(VERBOSE) $(V)), )
 S :=
 
 ifeq ($(INC), )
@@ -58,8 +58,8 @@ ifeq ($(NOFLAG), )
 $(info $(call wrn_c) $(shell echo "$BNOFLAGS$R is off, default $B'-Wall -Werror -Wextra'$R"))
 endif
 
-ifeq ($(TAG), )
-$(info $(call wrn_c) $(shell echo "$BTAG$R is off, default $B$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')$R"))
+ifeq ($(TAG_WARNING), )
+$(info $(call wrn_c) $(shell echo "$BTAG$R is off, default $B$(TAG)$R"))#$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
 endif
 endif
 
@@ -103,11 +103,11 @@ D_LIB	= ./libs
 endif
 
 ifeq ($(LIBS), )
-LIBS	= $(shell find $(D_LIB) -type d -maxdepth 1)
+LIBS	= $(shell if [ -d $(D_LIB) ] ; then ls -lrt -d -1 $(D_LIB)/* ; fi )
 endif
 
 ifeq ($(LIBA), )
-LIBA	= $(shell find $(LIBS) -type f -iname 'Makefile' -exec grep -m 1  'NAME' {} \; | cut -d '=' -f2- )
+LIBA	= $(shell  find $(LIBS) -type f -iname 'Makefile' -exec grep -m 1  'NAME' {} \; | cut -d '=' -f2- )
 endif
 
 ifeq ($(INCLIB), )
@@ -140,8 +140,4 @@ ifeq ($(NOFLAG), )
 CFLAGS	=
 else 
 CFLAGS ?= -Wall -Werror -Wextra
-endif
-
-ifeq ($(TAG), )
-TAG		:=  $(shell echo $$RANDOM % 255 + 1 | bc) #$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
 endif

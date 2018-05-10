@@ -60,7 +60,7 @@ endif
 # make others makes
 libs:
 ifneq ($(LIBS), )
-	$(S_3)$(foreach lb, $(LIBS),$(MAKE) -C $(lb) VERBOSE=$(SIL) INTER=yes DEPTH="$(DEPTH) + 1" ;)
+	$(S_4)$(foreach lb, $(LIBS),$(MAKE) -C $(lb) VERBOSE=$(SIL) INTER=yes DEPTH="$(DEPTH) + 1" ;)
 	$(S_2)echo "$(INF_STR) : libs has been created $(OK_STR)"
 else
 	$(S_2)echo "$(WRN_STR) : No Libs needed for $(TAG_COLOR)$(NAME)$(RESET)" 
@@ -68,12 +68,12 @@ endif
 
 $(NAME): $(OBD) $(OBJ) libs
 ifeq ($(suffix $(NAME)), .a)
-	$(S_3)$(AR) rc $(NAME) $(OBJ)
+	$(S_4)$(AR) rc $(NAME) $(OBJ)
 ifneq ($(LIBS), )
-	$(S_3)libtool -static -o  $(NAME) $(NAME) $(patsubst ./, $(LIBA), )
+	$(S_4)libtool -static -o  $(NAME) $(NAME) $(patsubst ./, $(LIBA), )
 	$(S_2)echo "$(INF_STR) : lib join $(OK_STR)"
 endif
-	$(S_3)ranlib $(NAME)
+	$(S_4)ranlib $(NAME)
 	$(S_2)echo "$(INF_STR) : make lib $(OK_STR)"
 else
 	$(S_2)$(CC) $(INC) -c $< -o $@ $(INCLIB)
@@ -82,21 +82,21 @@ endif
 
 # make dirs
 mki:
-	$(S_3)$(foreach D, $(DIRS), mkdir -p $(D);)
-	$(S_3)$(foreach D,$(DIRS),echo "$(INF_STR) mkdir -p $(D)" ;) 
+	$(S_4)$(foreach D, $(DIRS), mkdir -p $(D);)
+	$(S_4)$(foreach D,$(DIRS),echo "$(INF_STR) mkdir -p $(D)" ;) 
 
 # generate  files.d 
 $(D_OBD)/%.d: %.c
-	$(S_3)mkdir -p $(D_OBD)
-	$(S_3)$(CC) $(INC) -M -mtbm $(patsubst %.c, $(D_OBJ)/%.o, $(patsubst $(D_SRC), $<, ))  $< -o $@
+	$(S_4)mkdir -p $(D_OBD)
+	$(S_4)$(CC) $(INC) -M -mtbm $(patsubst %.c, $(D_OBJ)/%.o, $(patsubst $(D_SRC), $<, ))  $< -o $@
 ifeq ($(filter @, $(S_1)), )
 	$(S_2)echo "$(INF_STR) : genration $@ $(OK_STR)"
 endif
 
 #generate files.o
 $(D_OBJ)/%.o: %.c
-	$(S_3)mkdir -p $(D_OBJ)
-	$(S_3)$(CC) $(FLAGS) $(INC) -c $< -o $@
+	$(S_4)mkdir -p $(D_OBJ)
+	$(S_4)$(CC) $(FLAGS) $(INC) -c $< -o $@
 ifeq ($(filter @, $(S_1)), )
 	$(S_2)echo "$(INF_STR) : genration $@ $(OK_STR)"
 endif

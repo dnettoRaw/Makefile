@@ -48,13 +48,14 @@ MMPATH := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))src
 include $(MMPATH)/ColorMaker.mk
 include $(MMPATH)/AutoComplete.mk
 include $(MMPATH)/VerboseMods.mk
+include $(MMPATH)/DefautValues.mk
 include $(MMPATH)/CreatFiles.mk
 include $(MMPATH)/RemoveFiles.mk
 include $(MMPATH)/MakeMakefile.mk
 include $(MMPATH)/norme42.mk
 
 debug:
-	@echo "$(INF_STR)"
+	@echo "$(INF_STR) $(D_CLEAN)"
 #\n\nFILEBASE_C	= $(FILEBASE_C)\n\nFILEBASE_H	= $(FILEBASE_H)\n\nDIRBASE_C	= $(DIRBASE_C)\n\nDIRBASE_H	= $(DIRBASE_H)\n\nsrc	= $(SRC)\n\nobj	= $(OBJ)\n\nobd	= $(OBD)\n\nnorm	=$(NORM_C) || $(NORM_H)"
 
 #"src = $(SRC)\n\nobj = $(OBJ)\n\nobd = $(OBD)\n\nnorm = $(NORM)"
