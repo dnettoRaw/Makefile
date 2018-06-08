@@ -56,12 +56,11 @@ endif
 
 obj: $(OBD) msg_objd $(OBJ) msg_objo
 
-
 # generate  files.d 
-$(D_OBD)/%.d: %.c
+$(D_OBD)/%.d: $(INC_FILES)
 	$(S_4)$(CC) $(INC) -M -mtbm $(patsubst %.c, $(D_OBJ)/%.o, $(patsubst $(D_SRC), $<, ))  $< -o $@
 ifeq ($(filter @, $(S_2)), )
-	$(S_4)echo "$(INF_STR) : genration $@ $(OK_STR)"
+	$(S_4)echo "$(INF_STR) : genration $@ $(OK_STR)$(patsubst %.c, $(D_OBJ)/%.o, $(patsubst $(D_SRC), $<, )) "
 endif
 
 msg_objd:
@@ -70,7 +69,7 @@ ifeq ($(filter @, $(S_2)), )
 endif
 
 # generate  files.o
-$(D_OBJ)/%.o: %.c
+$(D_OBJ)/%.o: %.c $(D_OBD)/%.d
 	$(S_4)$(CC) $(FLAGS) $(INC) -c $< -o $@
 ifeq ($(filter @, $(S_2)), )
 	$(S_4)echo "$(INF_STR) : genration $@ $(OK_STR)"

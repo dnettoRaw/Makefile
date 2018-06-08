@@ -58,8 +58,8 @@ ifeq ($(NOFLAG), )
 $(info $(call wrn_c) $(shell echo "$BNOFLAGS$R is off, default $B'-Wall -Werror -Wextra'$R"))
 endif
 
-ifeq ($(TAG_WARNING), )
-$(info $(call wrn_c) $(shell echo "$BTAG$R is off, default $B$(TAG)$R"))#$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
+ifeq ($(TAG), )
+$(info $(call wrn_c) $(shell echo "$BTAG$R is Not set, default $B$(TAG)$R"))#$(shell awk -v min=1 -v max=255 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
 endif
 endif
 
@@ -81,10 +81,9 @@ ifeq ($(D_SRC), )
 D_SRC	= ./src
 endif
 
-FILEBASE_C	= $(foreach V, $(shell find $(D_SRC) -type f | grep "\.c" | rev | cut -f2- -d. | rev | cut -f3- -d/), $(V))
-FILEBASE_H	= $(foreach V, $(shell find $(D_INC) -type f | grep "\.h" | rev | cut -f2- -d. | rev | cut -f3- -d/), $(V))
-DIRBASE_C	= $(foreach V, $(shell find $(D_SRC) -type d |  cut -f3- -d/ | sed '1d'),$(V))
-DIRBASE_H	= $(foreach V, $(shell find $(D_INC) -type d |  cut -f3- -d/ | sed '1d'),$(V))
+FILEBASE_C	=$(shell find $(D_SRC) -type f | grep "\.c" | rev | cut -f2- -d. | cut -d/ -f1 | rev)
+DIRBASE_C	=$(shell find $(D_SRC) -type d |  cut -f3- -d/ | sed '1d')
+DIRBASE_H	=$(shell find $(D_INC) -type d |  cut -f3- -d/ | sed '1d')
 
 ifeq ($(D_OBJ), )
 D_OBJ	= ./objs/files.o
@@ -115,12 +114,12 @@ INCLIB	= $(foreach lsd, $(LIBS), -L$(lsd)/ -l$(shell find $(lsd) -type f -iname 
 endif
 
 ifeq ($(INC), )
-INC_FILES = $(addprefix $(FILEBASE_H), .h)
+INC_FILES = $(shell find $(D_INC) -type f)
 INC 	= $(addprefix -I, $(D_INC)) #$(foreach ins, $(TMP_FIND), -I./includes/$(ins))
 endif
 
 ifeq ($(SRC), )
-SRC		= $(patsubst %, $(D_SRC)/%.c, $(FILEBASE_C)) #$(wildcard $(D_SRC)/*.c)
+SRC		= $(shell find $(D_SRC) -type f | grep "\.c") #$(wildcard $(D_SRC)/*.c)
 endif
 
 ifeq ($(OBJ), )

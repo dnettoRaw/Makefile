@@ -53,10 +53,12 @@ include $(MMPATH)/CreatFiles.mk
 include $(MMPATH)/RemoveFiles.mk
 include $(MMPATH)/MakeMakefile.mk
 include $(MMPATH)/norme42.mk
+include $(MMPATH)/OthersFunctions.mk
 
 debug:
-	@echo "$(INF_STR) $(D_CLEAN)"
-#\n\nFILEBASE_C	= $(FILEBASE_C)\n\nFILEBASE_H	= $(FILEBASE_H)\n\nDIRBASE_C	= $(DIRBASE_C)\n\nDIRBASE_H	= $(DIRBASE_H)\n\nsrc	= $(SRC)\n\nobj	= $(OBJ)\n\nobd	= $(OBD)\n\nnorm	=$(NORM_C) || $(NORM_H)"
+	@echo "$(foreach dir, $(DIRBASE_C), $(D_SRC)/$(dir))"
+
+#\n\nFILEBASE_H = $(FILEBASE_H) \n\nDIRBASE_H	= $(DIRBASE_H)\n\nsrc	= $(SRC)\n\nobj	= $(OBJ)\n\nobd	= $(OBD)\n\nnorm	=$(NORM_C) || $(NORM_H)"
 
 #"src = $(SRC)\n\nobj = $(OBJ)\n\nobd = $(OBD)\n\nnorm = $(NORM)"
 

@@ -13,14 +13,22 @@ FILES := auteur Makefile src/exemple.c includes/exemple.h libs/place_your_libs_f
 $(info $(call wrn_c) $(shell echo "$W$BFILES$R is not defined, setting it to default $B'$(FILES)'$(R)"))
 endif
 
+ifeq ($(shell if [ -z $(path) ] && [ -z $(name) ] ; then echo "true" ; fi ), true)
+$(error $(call err_c) $(shell echo "$W$Bpath OR name$R is not defined, ex: $B$U$$> make path=NewProject help$R for more inf"))
+
+else
+
 ifeq ($(path), )
-$(error $(call err_c) $(shell echo "$W$Bpath$R is not defined, ex: $B$U$$> make path=NewProject help$R for more inf"))
+path := $(PWD)/$(name)
+$(info $(call wrn_c) $(shell echo "$W$Bpath$R is not defined, setting it to default $B'$(path)'$(R)"))
 endif
 
 ifeq ($(name), )
 name := $(shell echo "$(path)" | rev | cut -d '/' -f 1 | rev )
 $(info $(call wrn_c) $(shell echo "$W$Bname$R is not defined, setting it to default $B'$(name)'$(R)"))
 endif
+endif
+
 
 
 
