@@ -1,7 +1,7 @@
 # Makefile
 Makefile Helper
 
-$> git clone https://github.com/dnetto42/Makefile.git ~/Makefile
+$> git clone https://github.com/dnettoRaw/Makefile.git ~/Makefile
 
 $> make -C ~/Makefile help
 
